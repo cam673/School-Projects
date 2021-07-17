@@ -1,0 +1,14 @@
+CECS 424 - Organization of Programming Languages
+Christopher Masferrer
+
+Comparisons of C vs Haskell in sorting algorithms
+
+C and Haskell are both capable of creating both the quicksort and merge sort algorithms. However the method of creating the algorithms
+differ between the two. Haskell is highly dependent on recursions to make the algorithms while C can incorporate both recursion and
+loops. However, Haskell is able to create both with fewer lines of code than the C versions. In addition, haskell requires fewer
+instructions on how to sort the algorithm as it has to figure it out. In comparison, every single step has to be specified with C in
+order to sort it. This comes with the added bonus of having direct control over which index position it is currently pointing to which
+is something that cannot be done with Haskell. Haskell incorporates a head and tail technique that is used to indicate the current
+element it is pointing to and the the rest of the elements. Both languages have their ups and downs. C gives you more control but
+requires you to list every step and more lines of code while Haskell figures it out for you but with less control and more dependency
+on recursion.
