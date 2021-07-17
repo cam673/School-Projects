@@ -1,0 +1,6 @@
+results of solve:
+
+ms_gort saw a water_tower on tuesday.
+mr_klatu saw a clothesline on wednesday.
+mr_nikto saw a frisbee on thursday.
+ms_barrada saw a balloon on friday.
