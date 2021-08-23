@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".signUpActivity">
+
+    <!-- Enter username -->
+    <EditText
+        android:id="@+id/userNameR"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/edit"
+        android:padding="12dp"
+        android:inputType="textPersonName"
+        android:hint="User name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Enter password -->
+    <EditText
+        android:id="@+id/passwordR"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/edit"
+        android:padding="12dp"
+        android:inputType="textPassword"
+        android:hint="Password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userNameR" />
+
+    <!-- Re-Enter Password -->
+    <EditText
+        android:id="@+id/rePasswordR"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/edit"
+        android:padding="12dp"
+        android:inputType="textPassword"
+        android:hint="Retype Password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordR" />
+
+    <!-- Enter Email -->
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/edit"
+        android:padding="12dp"
+        android:inputType="textEmailAddress"
+        android:hint="Email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rePasswordR" />
+
+    <!-- Enter Phone -->
+    <EditText
+        android:id="@+id/phone"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/edit"
+        android:padding="12dp"
+        android:inputType="phone"
+        android:hint="Phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email" />
+
+    <!-- Register if all credentials are filled correctly -->
+    <Button
+        android:id="@+id/button"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:text="Sign me up!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
