@@ -1,0 +1,102 @@
+//F# practice code
+let square x = x * x
+5
+|> square
+|> printfn "%d"
+
+let prefix prefixStr baseStr =
+  prefixStr + ", " + baseStr
+
+let names = ["Mark"; "Bill"; "Tony"]
+printfn "%A" names
+
+let prefixWithHello = prefix "Hello"
+let exclaim s = 
+  s + "!"
+
+let bigHello = prefixWithHello >> exclaim
+names
+|> Seq.map bigHello
+|> Seq.sort
+|> printfn "%A"
+
+let isSmart baseStr =
+  baseStr + " is Smart."
+
+names
+|> Seq.map isSmart
+|> printfn "%A"
+
+//F# practice homework
+let numList1 = [22; 35; 12; 7; 85; 90; 56]
+
+//reverse function for the filter function
+let rec reverse coll =
+  match coll with
+    | h::t -> (reverse t)@[h]
+    | [] -> []
+
+numList1 |> reverse |> printfn "%A"
+
+//a. compare
+//x is type int, y is type int, compare is a function
+let compare x y = 
+  if x = 0 && y =0 then
+    printfn "%d" 0
+  elif x > y then
+    printfn "%d" (x - y)
+  elif y > x then
+    printfn "-%d" (y - x)
+
+compare 3 5
+
+//b. filter pred
+//pred is a function, filter is a function, collection is a list
+let rec filter pred coll a =
+  match coll with
+  |[] -> reverse a
+  if (pred (List.head coll)) then
+    filter pred (List.tail coll) ((a)@[List.head coll])
+  filter pred (List.tail coll) a
+
+//let filter pred coll =
+  //filter pred coll []
+
+//filter isOdd numList1
+
+//c. butlast
+// coll is type list, butLast is a function
+let rec last coll =
+  match coll with
+  | [x] -> x
+  | h::t -> last t
+
+//let rec butLast coll a = 
+ // match coll with
+  //| [x] -> a
+  //| h::t -> butlast coll ((a)@[List.head coll])
+
+//let numList2 = []
+numList1 |> last |> printfn "%d"
+//butLast numList2
+
+//d. countEvens
+//countEvens is a function, coll is type list
+let rec countEvens n coll =
+  if List.head coll % 2 = 0 then
+    n = n + 1
+  else
+    //n |> countEvens (List.tail coll)
+    coll |> List.tail |> countEvens (n-1)
+
+let accum = 0
+//countEvens accum numList1
+//accum |> printfn "%d"
+//accum |> countEvens numList1 |> printfn "%d"
+
+let rec skip n coll =
+  match n with
+  | 0 -> coll
+  | _ -> skip (n - 1) (List.tail coll)
+
+[1; 2; 3; 4] |> skip 2 |> printfn "%A" //prints [3; 4]
