@@ -1,0 +1,216 @@
+;;Christopher Masferrer
+;;011894127
+;;CECS 424
+(ns derivatives.core)
+
+(defn third [list]
+  (second (next list)))
+
+;; True if the form is a variable (symbol).
+(defn variable? [form]
+  (symbol? form))
+
+;; True if the two forms are the same variable.
+(defn same-variable? [form1 form2]
+  (and (variable? form1) (variable? form2) (= form1 form2)))
+
+;; True if the form represents a sum.
+(defn sum? [form]
+  (and (list? form) (= '+ (first form))))
+
+;; Constructs a sum of a and b.
+(defn make-sum [a b]
+  (if (and (number? a) (number? b))
+  (+ a b)
+  (if (and (number? a) (zero? a))
+    b (if (and (number? b) (zero? b))
+      a (list '+ a b)))))
+
+;; Selects the addend (first value) of a sum.
+(defn addend [sum]
+  (second sum))
+
+;; Selects the augend (second value) of a sum.
+(defn augend [sum]
+  (third sum))
+
+;; Added
+;; True if the form represents a difference.
+(defn diff? [form]
+  (and (list? form) (= '- (first form))))
+
+;;Added
+;; Constructs a difference between a and b.
+(defn make-diff [a b]
+  (if (and (number? a) (number? b))
+  (- a b)
+  (if (and (number? a) (zero? a))
+    (list '- b) (if (and (number? b) (zero? b)) 
+      a (list '- a b)))))
+
+;;Added
+;; Selects the differend (first value) of a difference.
+(defn differend [diff]
+  (second diff))
+
+;;Addes
+;; Selects the differand (second value) of a difference.
+(defn differand [diff]
+  (third diff))
+
+;; True if the form represents a product.
+(defn prod? [form]
+  (and (list? form) (= '* (first form))))
+
+;; Constructs a product of a and b.
+(defn make-prod [a b]
+  (if (and (number? a) (number? b))
+  (* a b)
+  (if (and (number? a) (zero? a))
+    0 (if (and (number? b) (zero? b))
+      0 (if (= a 1)
+        b (if (= b 1)
+          a (list '* a b)))))))
+
+;; Selects the multiplier (first value) of a product.
+(defn multiplier [prod]
+  (second prod))
+
+;; Selects the multiplicand (second value) of a product.
+(defn multiplicand [prod]
+  (third prod))
+
+;;Added
+;; True if form represents a power.
+(defn power? [form]
+  (and (list? form) (= '** (first form))))
+
+;;Added
+;; Constructs a product of a and b.
+(defn make-power [a b]
+  (if (and (number? a) (number? b))
+  (Math/pow a b)
+  (if (= b 1)
+    a (if (= b 0)
+      1 (list '** a b)))))
+
+;;Added
+;; Selects the dividend (first value) of a power.
+(defn base [power]
+  (second power))
+
+;;Added
+;; Selects the divisor (second value) of a power.
+(defn exponent [power]
+  (third power))
+
+;;Added
+;; True if form represents a quotient
+(defn quotient? [form]
+  (and (list? form) (= '/ (first form))))
+
+;;Added
+;; Constructs a quotient of a and b.
+(defn make-quot [a b]
+  (if (and (number? a) (number? b))
+  (/ a b)
+  (if (= b 1)
+    a (if (= a 0)
+      0 (list '/ a b)))))
+
+;;Added
+;; Selects the dividend (first value) of a quotient.
+(defn dividend [quot]
+  (second quot))
+
+;;Added
+;; Selects the divisor (second value) of a quotient.
+(defn divisor [quot]
+  (third quot))
+
+;;Added
+;;True if form represents a natural log
+(defn ln? [form]
+  (and (list? form) (= 'ln (first form))))
+
+;;Added
+;; returns u of ln u
+(defn log-of [ln]
+  (second ln))
+
+;;Added
+;; True if form represents sin
+(defn sin? [form]
+  (and (list? form) (= 'sin(first form))))
+
+;;Added
+;; creates a sin value
+(defn make-sin [cos]
+  (list 'sin (second cos)))
+
+;;Added
+;; True if form represents cos
+(defn cos? [form]
+  (and (list? form) (= 'cos(first form))))
+
+;;Added
+;; creates a cos value
+(defn make-cos [sin]
+  (list 'cos (second sin)))
+
+;;Added
+;; True if form represents tan
+(defn tan? [form]
+  (and (list? form) (= 'tan(first form))))
+
+;;Added
+;; creates a sec value
+(defn make-sec [tan]
+  (list 'sec (second tan)))
+
+;;Added
+;; Retrieve angle of trig functions
+(defn angle [form]
+  (second form))
+
+;; Returns the derivative of a function expressed in Clojure notation, where variables are quoted.
+;; The second parameter is the variable which the derivative is calculated with respect to.
+(defn derivative [form var]
+  (cond ; The derivative of a constant is 0
+        (number? form) 0
+        ; The derivative of a variable is 0 if the variable is not the one being derived; or 1, if it is.
+        (variable? form) (if (same-variable? form var) 1 0)
+        ; Sum rule
+        (sum? form) (make-sum (derivative (addend form) var)
+                              (derivative (augend form) var))
+
+        ; Difference rule
+        (diff? form) (make-diff (derivative (differend form) var)
+                                (derivative (differand form) var))
+
+        ; Product rule
+        (prod? form) (make-sum (make-prod (multiplier form)
+                                          (derivative (multiplicand form) var))
+                               (make-prod (derivative (multiplier form) var)
+                                          (multiplicand form)))
+                                          
+        ; Power Rule
+        (power? form) (make-prod (make-prod (exponent form)
+                                 (make-power (base form) (- (exponent form) 1)))
+                                 (derivative (base form) var))
+                                  
+        ; Quotient Rule
+        (quotient? form) (make-quot (make-diff (make-prod (derivative (dividend form) var) (divisor form)) (make-prod (dividend form) (derivative (divisor form) var))) (make-power (divisor form) 2))
+
+        ; Natural Log Rule
+        (ln? form) (make-quot (derivative (log-of form) var) (log-of form))
+
+        ;Sin
+        (sin? form) (make-prod (make-cos form) (derivative (angle form) var))
+
+        ;Cos
+        (cos? form) (make-prod (make-diff 0 (make-sin form)) (derivative (angle form) var))
+
+        ;Tan
+        (tan? form) (make-prod (make-power (make-sec form) 2) (derivative (angle form) var))
+                                        ))
